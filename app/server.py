@@ -1,6 +1,7 @@
 from waitress import serve
 from flask import Flask
 import controllers
+from decouple import config
 
 
 class Server():
@@ -8,8 +9,10 @@ class Server():
         self.__flask__ = Flask('Gateway')
 
     def config(self):
-        self.__flask__.config['JSON_SORT_KEYS'] = False
         self.__flask__.route('/', methods=['GET'])(lambda: 'Gateway service is running')  # noqa: E501
+
+        self.__flask__.config['JSON_SORT_KEYS'] = False
+        self.__flask__.config['ENV'] = config('ENV')
 
         return self
 
@@ -20,4 +23,7 @@ class Server():
         return self
 
     def run(self):
-        serve(self.__flask__)
+        if config('ENV') == 'production':
+            serve(self.__flask__)
+        else:
+            self.__flask__.run(port=config('PORT'))
