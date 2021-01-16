@@ -62,7 +62,7 @@ class BaseService:
 
         try:
             response = request(
-                url=f'{self.__host__}{self.__endpoint__}',
+                url=f'http://{self.__host__}{self.__endpoint__}',
                 method=self.__method__,
                 headers=self.__headers__,
                 params=self.__query__,
