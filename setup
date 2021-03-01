@@ -1,0 +1,6 @@
+#!/bin/sh
+
+python3 -m venv venv
+
+cp scripts/install venv/bin/install
+cp scripts/start venv/bin/start
